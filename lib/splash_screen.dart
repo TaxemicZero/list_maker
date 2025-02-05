@@ -22,16 +22,16 @@ class _SplashScreenState extends State<SplashScreen> {
         child:Column(
           mainAxisAlignment: MainAxisAlignment.center,
           //Legally obliged to say this I believe, so
-          //https://www.flaticon.com/free-icons/food-and-restaurantFood and restaurant icons created by Freepik - Flaticon</a>
+          //<a href="https://www.flaticon.com/free-icons/to-do-list" title="to do list icons">To do list icons created by ultimatearm - Flaticon</a>
           children: [
-            Image.asset('assets/frying-pan.png',
+            Image.asset('assets/to-do-list.png',
             height: 50,
             width: 50,),
 
             SizedBox(
               height: 5,
             ),
-            Text('The Cookbook',
+            Text('My Wishlist',
               style: TextStyle(fontSize:25, fontWeight: FontWeight.bold),)
           ],
         ),
