@@ -96,17 +96,17 @@ class _ListWidgetState extends State<ListWidget> {
   @override
   void initState() {
     super.initState();
-    _loadTodos();
+    _loadTobuys();
   }
 
-  void _loadTodos() async {
+  void _loadTobuys() async {
     final tobuys = await _tobuyOperator.getAllTobuys();
     setState(() {
       _tobuys = tobuys;
     });
   }
 
-  void _addTodo() async {
+  void _addTobuy() async {
     final name = _nameController.text;
     final price = double.parse(_priceController.text);
     final amount = int.parse(_amountController.text);
@@ -117,11 +117,11 @@ class _ListWidgetState extends State<ListWidget> {
       _priceController.clear();
       _amountController.clear();
       _canShowButton = false;
-      _loadTodos();
+      _loadTobuys();
     }
   }
 
-  void _updateTodo(Tobuy tobuy) async {
+  void _updateTobuy(Tobuy tobuy) async {
     final updatedTobuy = Tobuy(
       id: tobuy.id,
       name: _nameController.text,
@@ -132,7 +132,7 @@ class _ListWidgetState extends State<ListWidget> {
     _nameController.clear();
     _priceController.clear();
     _amountController.clear();
-    _loadTodos();
+    _loadTobuys();
   }
 
   void _deleteTobuy(int id) async {
@@ -140,7 +140,7 @@ class _ListWidgetState extends State<ListWidget> {
     _nameController.clear();
     _priceController.clear();
     _amountController.clear();
-    _loadTodos();
+    _loadTobuys();
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -186,7 +186,7 @@ class _ListWidgetState extends State<ListWidget> {
                               ),
                             ),
                             onPressed: () {
-                              _addTodo();
+                              _addTobuy();
                               hideButton(true);
                             },
                             child: const Text('Add \nItem',
@@ -205,7 +205,7 @@ class _ListWidgetState extends State<ListWidget> {
                                 ),
                               ),
                               onPressed: () {
-                                _updateTodo(_selectedNow);
+                                _updateTobuy(_selectedNow);
                                 hideButton(true);
                               },
                               child: const Text('Update \nItem',

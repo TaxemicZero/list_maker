@@ -9,7 +9,6 @@ class DBHelper {
   // constructor within the DBHelper class. Its main purpose is to ensure that
   //only one instance of the DBHelper class is created
 
-
 //use for 'get' access to the SQLite database
   Future<Database> get dataBase async {
     if (_database != null) return _database!;
@@ -25,7 +24,7 @@ class DBHelper {
       path,
       version: 1,
       onCreate:
-      _createDatabase, //callback fun which is called when the database is created
+      _createDatabase, //callback function which is called when the database is created
     );
   }
 
