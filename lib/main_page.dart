@@ -19,14 +19,24 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: _title,
       home: Scaffold(
-        appBar: AppBar(title: const Text(_title),
+        appBar: AppBar(
+          title:
+            const Text(_title,
+              style:
+                TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold
+                ),
+            ),
           shape: Border(
               bottom: BorderSide(
                   color: Colors.black,
                   width: 4
               )
           ),
-          elevation: 4,),
+          elevation: 4,
+          backgroundColor: Colors.blue[700],
+        ),
         body: ListWidget(),
       ),
     );
@@ -141,6 +151,7 @@ class _ListWidgetState extends State<ListWidget> {
   Widget build(BuildContext context) {
     return
       Scaffold(
+        backgroundColor: Colors.lightBlueAccent[100],
         key: _scaffoldKey,
           body: Column(
             children: [
@@ -160,38 +171,71 @@ class _ListWidgetState extends State<ListWidget> {
                       controller: _amountController,
                       decoration: InputDecoration(labelText: 'Amount'),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            _addTodo();
-                            hideButton(true);
-                          },
-                          child: const Text('Add \nItem',
-                          textAlign: TextAlign.center,),
-                        ),
-                        if (_canShowButton)
+                    Container(
+                      //color: Colors.blueAccent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: WidgetStateProperty.resolveWith(
+                                    (Set<WidgetState> states) {
+                                  if (states.contains(WidgetState.pressed)) return Colors.lightBlueAccent[500];
+                                  return Colors.lightBlueAccent[200]; // Use the component's default color for other states
+                                },
+                              ),
+                            ),
+                            onPressed: () {
+                              _addTodo();
+                              hideButton(true);
+                            },
+                            child: const Text('Add \nItem',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.black)
+                            ),
+                          ),
+                          if (_canShowButton)
                             ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor: WidgetStateProperty.resolveWith(
+                                      (Set<WidgetState> states) {
+                                    if (states.contains(WidgetState.pressed)) return Colors.lightBlueAccent[500];
+                                    return Colors.lightBlueAccent[200]; // Use the component's default color for other states
+                                  },
+                                ),
+                              ),
                               onPressed: () {
                                 _updateTodo(_selectedNow);
                                 hideButton(true);
                               },
                               child: const Text('Update \nItem',
-                                textAlign: TextAlign.center,),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.black)
+                              ),
                             ),
-                        !_canShowButton
-                            ? const SizedBox.shrink()
-                            : ElevatedButton(
-                              onPressed: () {
-                                _deleteTobuy(_selectedNow.id!);
-                                hideButton(true);
-                              },
-                              child: const Text('Remove \nItem',
-                                textAlign: TextAlign.center,),
-                            ),
-                      ],
-                    )
+                          if(_canShowButton)
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: WidgetStateProperty.resolveWith(
+                                        (Set<WidgetState> states) {
+                                      if (states.contains(WidgetState.pressed)) return Colors.lightBlueAccent[500];
+                                      return Colors.lightBlueAccent[200]; // Use the component's default color for other states
+                                    },
+                                  ),
+                                ),
+                                onPressed: () {
+                                  _deleteTobuy(_selectedNow.id!);
+                                  hideButton(true);
+                                },
+                                child: const Text('Remove \nItem',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.black)
+                                ),
+                          ),
+                        ],
+                      )
+
+                    ),
 
                     /*
                     ElevatedButton(
@@ -210,44 +254,51 @@ class _ListWidgetState extends State<ListWidget> {
                   itemCount: _tobuys.length,
                   itemBuilder: (context, index) {
                     final tobuy = _tobuys[index];
-                    return ListTile(
-                      title: Text(tobuy.name),
-                      subtitle:
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(tobuy.amount.toString())
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(" for " + tobuy.price.toString() + " Rs." ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text("Total: " + (tobuy.price! * (tobuy.amount)!.toDouble()).toString() + " Rs." ),
-                                ],
-                              )
-                            ],
-                          ),
-                      trailing: IconButton(
-                        icon: Icon(Icons.edit),
-                        onPressed: () {
-                          _nameController.text = tobuy.name;
-                          _priceController.text = tobuy.price.toString();
-                          _amountController.text = tobuy.amount.toString();
-                          hideButton(false);
-                          _selectedNow = tobuy;
+                    return Container(
+                      decoration: const BoxDecoration(
+                        border: Border(bottom: BorderSide(color: Colors.blueGrey),
+                        top: BorderSide(color: Colors.blueGrey)),
+                      ),
+                      child:
+                        ListTile(
+                          title: Text(tobuy.name),
+                          subtitle:
+                            Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(tobuy.amount.toString())
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        Text(" for " + tobuy.price.toString() + " Rs." ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text("Total: " + (tobuy.price! * (tobuy.amount)!.toDouble()).toString() + " Rs." ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          trailing: IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              _nameController.text = tobuy.name;
+                              _priceController.text = tobuy.price.toString();
+                              _amountController.text = tobuy.amount.toString();
+                              hideButton(false);
+                              _selectedNow = tobuy;
 
-                        },
+                          },
+                        ),
                       ),
                     );
                   },
